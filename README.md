@@ -10,8 +10,7 @@ Curated by <https://github.com/n8n-io>, it combines the self-hosted n8n
 platform with a curated list of compatible AI products and components to
 quickly get started with building self-hosted AI workflows.
 
-> [!TIP]
-> [Read the announcement](https://blog.n8n.io/self-hosted-ai/)
+> [!TIP] > [Read the announcement](https://blog.n8n.io/self-hosted-ai/)
 
 ### What’s included
 
@@ -24,8 +23,43 @@ and run the latest local LLMs
 ✅ [**Qdrant**](https://qdrant.tech/) - Open-source, high performance vector
 store with an comprehensive API
 
-✅ [**PostgreSQL**](https://www.postgresql.org/) -  Workhorse of the Data
+✅ [**PostgreSQL**](https://www.postgresql.org/) - Workhorse of the Data
 Engineering world, handles large amounts of data safely.
+
+```mermaid
+graph TD;
+    service-n8n --> includes
+    service-ollama --> includes
+    init-ollama --> includes
+
+    services --> postgres
+
+    services --> n8n-import
+    postgres --> n8n-import
+    n8n-import --> service-n8n
+
+    services --> n8n
+    postgres --> n8n
+    n8n-import --> n8n
+    n8n --> service-n8n
+
+    services --> qdrant
+
+    services --> ollama-cpu
+    ollama-cpu --> service-ollama
+
+    services --> ollama-gpu
+    ollama-gpu --> service-ollama
+
+    services --> ollama-pull-llama-cpu
+    ollama-pull-llama-cpu --> init-ollama
+    ollama-cpu --> ollama-pull-llama-cpu
+
+    services --> ollama-pull-llama-gpu
+    ollama-gpu --> ollama-pull-llama-gpu
+    ollama-pull-llama-gpu --> init-ollama
+
+```
 
 ### What you can build
 
